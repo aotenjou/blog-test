@@ -1,6 +1,6 @@
 ---
 
-title: Java学习之路
+title: Java学习之路1
 
 date: 2024-09-14 14:33:31
 
@@ -20,7 +20,7 @@ tags:
 - 用maven工程管理jar包:修改pom.xml,自动下载dependencies.
 
 - 不同开发工具Java项目的目录结构不同.在maven下则能创建统一的目录结构.
-```
+
 maven-project
 	\src
 		\main #实际项目资源
@@ -30,9 +30,10 @@ maven-project
 			\java
 			\resources
 		\pom.xml #项目配置文件
-```
+
 
 - maven在"清理->编译->测试->打包->发布"五个阶段均能提供帮助.
+- 打包文件储存在/target目录下.
 
 # maven概述
 
