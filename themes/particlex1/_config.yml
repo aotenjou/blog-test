@@ -156,3 +156,6 @@ twikoo:
     region:
     path: location.pathname
     lang:
+    
+aplayer:
+  external: true
