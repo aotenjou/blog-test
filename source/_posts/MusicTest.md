@@ -1,7 +1,7 @@
 ---
 title: MusicTest
 date: 2024-09-15 14:51:31
-tags:
+tags: test
 ---
 尝试加入音乐 :P
 <audio src="TEST.mp3" controls="controls" preload="auto" autoplay="autoplay" loop="loop" >
