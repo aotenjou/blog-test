@@ -154,4 +154,71 @@ web应用服务器
 - 缺少jdk
 ![](https://pic.imgdb.cn/item/66ebe205f21886ccc0c31137.png)
 
-### 入门程序解析
+# 入门程序解析
+
+browser$\leftrightarrow$DispatcherServlet(前端控制器),把所有请求解析并封装到HTTPservletRequest,响应Response$\leftrightarrow$Controller
+
+### 请求
+##### postman(用apifox代替了)
+接口测试
+
+#### 常见参数
+##### 简单参数
+###### 1.原始方式获得请求参数
+- Controller方法中形参声明HttpServletRequest变量
+- 调用对象的getParameter
+###### 2.接收简单参数
+- **请求参数名**和**方法形参变量名**相同
+- 自动进行类型转换
+###### 3.@RequestParam注解
+- 方法**形参**和**请求参数**名称不匹配,用该注解完成映射.
+- 注解**required**默认为**true**,代表参数必须传递.
+
+
+##### 实体参数
+- 实体对象参数:**请求参数名**和**对象属性名**,相同,即可直接通过POJO接收.
+
+##### 数组\集合参数
+- 数组:**请求参数名**和**形参中数组变量名**相同,可以直接使用数组封装.
+- 集合:...,通过@RequestParam绑定参数关系.
+
+##### 日期参数
+- @DateTimeFormat完成日期参数格式转换.(pattern="")指定格式.
+##### JSON参数
+- Body->raw
+- 使用 @RequestBody 注解将请求体中的 JSON 数据映射到 Java 对象.
+
+##### 路径参数
+- 使用 @PathVariable 注解获取路径参数,在@RequestMapping中也要标识id{多个用"/"分割}
+
+##### P.S.
+- @Valid :指示 Spring 框架对方法参数或对象进行验证，确保传入的数据符合预期的格式和约束。
+  
+  @Valid 注解会触发 Spring 的数据验证机制，对被注解的类或方法参数进行验证。验证规则由你定义的校验注解（如 @NotNull、@NotBlank、@Size 等）来指定。
+  如果验证失败，Spring 会抛出 MethodArgumentNotValidException 异常。你可以使用 @ExceptionHandler 注解处理该异常，并返回相应的错误信息给客户端。
+  验证逻辑和业务逻辑分离.
+
+- @RequestMapping :用于将 HTTP 请求映射到特定的控制器方法。简单来说，它告诉 Spring 框架，当接收到某个特定类型的 HTTP 请求时，应该执行哪个控制器方法。
+
+### 响应
+@ResponseBody
+- Controller方法
+- 将**方法返回值**直接响应.如果是实体对象/集合,则返回JSON.
+- @RestController=@Controller+@ResponseBody
+
+#### 统一响应结果
+
+    public class Result
+    {
+        private bool code;
+        //响应,1成功,0失败
+
+        private string msg;
+        //提示信息
+
+        private object data;
+        //返回数据
+    }
+
+# 分层解耦
+### 三层架构
