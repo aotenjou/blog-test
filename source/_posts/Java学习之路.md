@@ -8,24 +8,23 @@ tags:
 ---
  <!-- more -->
 # maven依赖
-
 ### maven主要作用
 
 **依赖管理(jar),统一项目结构和项目构建**
 - 用maven工程管理jar包:修改pom.xml,自动下载dependencies.
 
 - 不同开发工具Java项目的目录结构不同.在maven下则能创建统一的目录结构.
-```
+
 maven-project
-	\src
-		\main #实际项目资源
-			\java #java源代码目录
-			\resources #配置文件目录
-		\test #测试项目文件
-			\java
-			\resources
-		\pom.xml #项目配置文件
-```
+    \src
+        \main #实际项目资源
+            \java #java源代码目录
+            \resources #配置文件目录
+        \test #测试项目文件
+            \java
+            \resources
+        \pom.xml #项目配置文件
+
 
 - maven在"清理->编译->测试->打包->发布"五个阶段均能提供帮助.
 - 打包文件储存在/target目录下.
@@ -222,3 +221,35 @@ browser$\leftrightarrow$DispatcherServlet(前端控制器),把所有请求解析
 
 # 分层解耦
 ### 三层架构
+- Controller: 控制层,接收/处理请求,响应数据.
+- Service: 业务逻辑层.
+- DAO: 数据访问层(持久层),数据增删改查.面向接口编程.
+### 分层解耦
+- 内聚:软件各个功能费内部的功能联系.
+- 耦合:衡量软件中各个层/模块之间的依赖关联程度.
+- 好标准:**高内聚,低耦合**.
+- Service层和DAO层的实现类,交给IOC容器管理.
+- 为Controller及Service注入运行时依赖的对象.
+### IOC:控制反转
+- 对象创建控制权由自身转移到外部容器.
+### DI:依赖注入
+- 容器为应用程序提供运行时所依赖的资源.
+- @Autowired按照类型自动装配
+
+    如果同类型bean存在多个
+        @Primary
+        @Autowired+@Qualifier("bean的名称")
+        @Resource(name="bean的名称")
+- @Resource和@Autowired的区别
+    @A是spring框架提供的注解,而@R是JDK提供的注解.
+    @A默认按类型注入,@R默认按名称注入.
+### Bean对象
+- IOC容器中创建管理的对象.
+- 要把对象交给IOC管理,需要在对应的类上加上注解.
+- 声明bean的时候,可以通过value指定bean名,如果没有指定,默认首字母小写.
+- spring boot集成web开发中,声明bean只能用@Controller
+##### Bean组件扫描
+- 声明Bean的四大注解,想要生效,还需要被注解扫描@ComponentScan扫描
+- @ComponentScan虽然没有显示配置,但实际上已经包含了在启动类声明注解@SpringBootApplication中,默认扫描范围是启动类所在包及其子包.
+- 
+

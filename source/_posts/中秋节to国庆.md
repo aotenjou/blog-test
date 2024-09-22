@@ -4,7 +4,7 @@ date: 2024-09-19 10:34:20
 tags:
 - 课内
 ---
-<!--more-->
+ <!-- more -->
 # Cpp实现的stack和queue
 ## STACK
 ### 1. 什么是 Stack？
