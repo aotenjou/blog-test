@@ -15,15 +15,15 @@ tags:
 
 - 不同开发工具Java项目的目录结构不同.在maven下则能创建统一的目录结构.
 
-maven-project
-    \src
-        \main #实际项目资源
-            \java #java源代码目录
-            \resources #配置文件目录
-        \test #测试项目文件
-            \java
-            \resources
-        \pom.xml #项目配置文件
+    maven-project
+        \src
+            \main #实际项目资源
+                \java #java源代码目录
+                \resources #配置文件目录
+            \test #测试项目文件
+                \java
+                \resources
+            \pom.xml #项目配置文件
 
 
 - maven在"清理->编译->测试->打包->发布"五个阶段均能提供帮助.
