@@ -5,8 +5,7 @@ tags:
 - 论文
 ---
  <!-- more -->
-
-## 分布式共识算法raft
+## understandable共识算法：RAFT
 
 ##### 相比其他分布式共识算法，raft的最大特点是**易于理解**。
 1. 问题分解：raft把共识算法分为三个子问题：
@@ -16,7 +15,7 @@ tags:
 2. 状态简化：对算法作出限制，减少状态数量和可能产生的变动。
 
 ## 1. 复制状态机
-
+![](https://pic1.imgdb.cn/item/67d3cfa088c538a9b5bd2596.png)
 **相同初始状态+相同输入=相同结束状态**。
 - 多个节点上，从**相同的初始状态开始**，执行相同的命令会产生**相同的最终状态**。
 
@@ -27,10 +26,10 @@ raft中，leader将用户端请求（command）封装到一个个log entries中�
 即便副本放入**不同的数据结构**，只要初始数据相同并发给相同的命令，同一时刻从两个副本中独到的结果也一样。（实现HTAP（OLTP+OLAP））。
 
 ## 2. 状态简化
-
+![](https://pic1.imgdb.cn/item/67d3cfc088c538a9b5bd2619.png)
 任何时刻，每各界点都是**leader/follower/candidate**状态之一。
 只需要考虑**状态切换**，不需考虑**共存与互相影响**。
-
+![[Pasted image 20250314144233.png]]
 raft把时间分割成任意长度的**任期（term）**，任期用连续的整数标记。
 
 每个任期从一次选举开始。
@@ -61,20 +60,20 @@ raft把时间分割成任意长度的**任期（term）**，任期用连续的�
 
 **请求投票RPC**
 
-```cpp
-//请求投票RPC Request
-type RequestVoteRequest struct{
-	int term；//自己当前任期号
-	int candidateID；//自己ID
-	int lastLogIndex；//自己最后一个日志号
-	int lastLogTerm；//自己最后一个日志的任期
-}
-//请求投票RPC Response
-type RequestVOteResponse struct{
-	int term；//自己当前任期号
-	bool voteGranted//自己会不会投票给这个candidate
-}
-```
+
+	//请求投票RPC Request
+	type RequestVoteRequest struct{
+		int term；//自己当前任期号
+		int candidateID；//自己ID
+		int lastLogIndex；//自己最后一个日志号
+		int lastLogTerm；//自己最后一个日志的任期
+	}
+	//请求投票RPC Response
+	type RequestVOteResponse struct{
+		int term；//自己当前任期号
+		bool voteGranted//自己会不会投票给这个candidate
+	}
+
 论文中称请求为argument，响应称result。
 
 - 对于没有成为candidate的follower节点，同一个任期会按照**先来先得原则**投出选票。
@@ -117,22 +116,22 @@ leader**永远不会覆盖/删除自己的日志条目（AppendOnly），只能�
 - 只要过半服务器正常运行，raft就能接受、复制、应用新的日志条目。
 - 正常情况下，新的日志条目可以在一个RPC来回中被复制给集群中的过半机器。
 - 单个运行慢的follower不会影响整体性能。
-```cpp
-//追加日志RPC Request
-type AppendEntriesRequest struct{
-	int term；//自己当前任期号
-	int leaderID；//leader（自己的）ID
-	int prevLogIndex；//前一个日志的日志号
-	int prevLogTerm；//前一个日志的任期号
-	byte[] entries；//当前日志体
-	int leaderCommit；//leader已提交日志号
-}
-//追加日志RPC Response
-type AppendEntriesReponse struct{
-	int term；//自己当前任期号
-	bool success；//如果该follower包含前一个日志，则返回true
-}
-```
+
+	//追加日志RPC Request
+	type AppendEntriesRequest struct{
+		int term；//自己当前任期号
+		int leaderID；//leader（自己的）ID
+		int prevLogIndex；//前一个日志的日志号
+		int prevLogTerm；//前一个日志的任期号
+		byte[] entries；//当前日志体
+		int leaderCommit；//leader已提交日志号
+	}
+	//追加日志RPC Response
+	type AppendEntriesReponse struct{
+		int term；//自己当前任期号
+		bool success；//如果该follower包含前一个日志，则返回true
+	}
+
 - 如果leaderCommit>commitIndex,那么把commitIndex设为min（leaderCommit,Index of last new entry）
 
 ## 5. 安全性问题
@@ -191,5 +190,12 @@ Raft的RPC需要接受并将信息落盘，广播时间大约**0.5-20ms**，取�
 集群先切换到一个过渡的配置，称为**联合一致（joint consensus）**。
 1. 第一阶段，leader发起$C_{old,new}$，使整个集群进入**联合一致状态**。这时，**所有RPC都要在新旧两个配置中都达到大多数才算成功**。
 2. 第二阶段，leader发起$C_{new}$，使整个集群进入新配置状态。这时，所有RPC只要在新配置下能达到大多数就算成功。
-**脑裂问题**
-后面听不懂了。。。
+
+这时有三种可能：
+![](https://pic1.imgdb.cn/item/67d3d12388c538a9b5bd2b71.png)
+1. Leader在$C{old,new}$未提交时宕机。
+2. Leader在$C{old,new}$已提交，$C_{new}$未发起时宕机。
+3. Leader在$C_{new}$，已发起时宕机。
+宗旨是避免**脑裂问题**
+
+**leader在选出来时天然具有所有日志，避免复写，日志只能从leader流向follower**。
