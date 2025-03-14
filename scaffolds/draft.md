@@ -2,4 +2,4 @@
 title: {{ title }}
 tags:
 ---
-<!--more-->
+<!-- more -->
