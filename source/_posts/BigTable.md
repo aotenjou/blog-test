@@ -2,7 +2,7 @@
 title: BigTable
 date: 2025-03-14 15:23:52
 tags:
-- 读论文
+- 论文
 ---
  <!-- more -->
 
