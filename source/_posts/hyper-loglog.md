@@ -12,11 +12,6 @@ tags:
 基数统计：
 对数据流$D=\{x_1,x_2...x_n\}$-->不重复元素个数$S$,称为基数。
 
-一个显而易见的方法：
-
-$$x_i在map/set ? \begin{cases}  & \text{ 在 } :基数不变 \\  & \text{ 不在 }: x->map/set,S++\end{cases}$$
-空间复杂度很高。
-
 hyperloglog：估计，误差范围内——>$S$。
 
 #### 算法流程
