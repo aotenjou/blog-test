@@ -4,7 +4,8 @@ date: 2025-03-15 21:44:47
 tags:
 - 论文
 ---
- <!-- more -->
+ <!-- more -->
+
 
 ## hyperloglog：快速估算不重复元素数量
 
@@ -13,10 +14,7 @@ tags:
 
 一个显而易见的方法：
 
-$$x_i在map/set ? \begin{cases}
-  & \text{ 在 } :基数不变 \\
-  & \text{ 不在 }: x->map/set,S++
-\end{cases}$$
+$$x_i在map/set ? \begin{cases}  & \text{ 在 } :基数不变 \\  & \text{ 不在 }: x->map/set,S++\end{cases}$$
 空间复杂度很高。
 
 hyperloglog：估计，误差范围内——>$S$。
