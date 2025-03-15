@@ -186,10 +186,13 @@ GFS维护每个chunk**校验和**，读取时进行数据校验。如果校验�
 
 ![](https://pic1.imgdb.cn/item/67d540bf88c538a9b5bec2ea.png)
 
+### 其他
+**快照snapshot机制：**
+COW（Copy On Write，写时复制）
+**回收租约，停止chunk写入——>拷贝元数据生成快照文件——>增加chunk引用计数——>master正常授权租约，允许chunk写入**
 
-
-
-
+**GC机制：**
+客户端直接删除的文件，丢失修改操作而失效的副本，checksum校验失败而失效的副本。
 
 
 
