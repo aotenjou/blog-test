@@ -7,7 +7,7 @@ tags:
  <!-- more -->
 
 
-## bigtable + google file system + levelDB （2）
+## bigtable + google file system + mapreduce （2）
 
 ## Google file system：最著名的分布式文件系统。
 

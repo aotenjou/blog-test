@@ -6,7 +6,7 @@ tags:
 ---
  <!-- more -->
 
-## bigtable + google file system + levelDB （1）
+## bigtable + google file system + mapreduce （1）
 
 ### Bigtable 的设计动机:
 
