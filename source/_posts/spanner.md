@@ -38,10 +38,7 @@ Spanner的部署叫做*universe*，可以让Spanner全球性的管理数据，�
 universe的结构中展示了多个Zone中都含有100-1000个Spanserver，Zone可以理解为一个区域(地域)的数据中心。
 而每个SpanServer都是由一个Paxos状态机和Paxos协议组成(但是一个Paxos Group的Paxos副本不一定在一个Zone中),不同Zone之间的数据复制也是通过Paxos Group
 
-作者：Ember
-链接：https://zhuanlan.zhihu.com/p/597208058
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 Spanner于bigtable不同之处在于，Spanner分配Timestamp给数据作为版本号，是其更像是一个多版本数据库，而不是键值对的存储，tablet的状态存储在B-tree类似的文件与WAL中tablet的上层则是一个paxos的状态机方便复制(Paxos的一些细节我也没有研究过，复制过程可以参考RaftLAb2的实现。每次写操作都需要写入两次：
 1. 写入tablet的log中 
