@@ -116,8 +116,8 @@ leader**永远不会覆盖/删除自己的日志条目（AppendOnly），只能�
 - 只要过半服务器正常运行，raft就能接受、复制、应用新的日志条目。
 - 正常情况下，新的日志条目可以在一个RPC来回中被复制给集群中的过半机器。
 - 单个运行慢的follower不会影响整体性能。
-。
 
+**追加rpc**
 
 	//追加日志RPC Request
 	type AppendEntriesRequest struct{
@@ -135,7 +135,7 @@ leader**永远不会覆盖/删除自己的日志条目（AppendOnly），只能�
 	}
 
 
-- 如果leaderCommit>commitIndex,那么把commitIndex设为min（leaderCommit,Index of last new entry）
+如果leaderCommit>commitIndex,那么把commitIndex设为min（leaderCommit,Index of last new entry）
 
 ## 5. 安全性问题
 
