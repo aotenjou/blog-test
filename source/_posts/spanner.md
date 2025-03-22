@@ -5,7 +5,7 @@ tags:
 - 论文
 
 ---
-<!-- more -->
+ <!-- more -->
 ## bigtable + google file system + mapreduce （4）
 ## Spanner 全球化分布式数据库
 
